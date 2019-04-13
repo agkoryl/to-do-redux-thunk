@@ -2,10 +2,23 @@ import { ADD_TODO } from './constants';
 import { POPULATE_TODOS } from './constants';
 
 
-export const addNewToDo = (todo) => ({
-    type: ADD_TODO,
-    todo
-})
+export const addNewToDo = (todo) => {
+    return (dispatch) => {
+    fetch('https://isajfdzl2.firebaseio.com/todos.json', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(todo)
+    })
+    .then(response => {
+        if(response.status === 200) {
+            return dispatch(fetchToDos())
+        }
+    })
+    }
+}
+
 
 
 export const populateToDos = (todolist) => ({
