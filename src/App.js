@@ -1,28 +1,56 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { addNewToDo } from './store/actions';
+
+import { connect } from 'react-redux';
 
 class App extends Component {
+
+
+  state = {
+    name: ""
+  }
+
+  handleChange = (element) => {
+    this.setState({ [element.target.name]: element.target.value })
+  }
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+    this.props.addToDo(this.state);
+    document.getElementById("form").reset();
+  }
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div className="app-container">
+        <div>
+          <table>
+            <tbody>
+              {this.props.todo.map(todo => {
+                return <tr key={todo.id}><td>{todo.name}</td></tr>
+              })}
+            </tbody>
+          </table>
+        </div>
+        <form onSubmit={this.handleSubmit} id="form">
+          <h2>Add a new todo</h2>
+          <input type="text" name="name" onChange={this.handleChange}>
+          </input>
+          <input type="submit" value="ADD"></input>
+        </form>
       </div>
     );
   }
 }
 
-export default App;
+const mapStateToProps = state => ({
+  todo: state.todo
+})
+
+const mapDispatchToProps = dispatch => ({
+  addToDo: (todo) => dispatch(addNewToDo(todo))
+})
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
