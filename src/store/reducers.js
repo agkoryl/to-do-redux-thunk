@@ -1,5 +1,5 @@
 
-import { ADD_TODO } from './constants';
+import { ADD_TODO, POPULATE_TODOS } from './constants';
 
 const INITIAL_STATE = []
 
@@ -16,8 +16,10 @@ export default (state = INITIAL_STATE, action) => {
                 ...state,
                 newToDo
             ]
-            default:
-            return state;
+        case POPULATE_TODOS:
+        return  action.todolist;
+        default:
+        return state;
     }
 }
 

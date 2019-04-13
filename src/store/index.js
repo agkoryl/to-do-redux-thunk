@@ -1,19 +1,28 @@
 import {
-    createStore, combineReducers
+    createStore, combineReducers,
+    applyMiddleware, compose
   } from 'redux';
+  import thunk from 'redux-thunk';
 
 
   import toDoReducer from './reducers';
 
   
-  const reducer = combineReducers({
+  const rootReducer = combineReducers({
    todo: toDoReducer
   });
+
+  const composeEnhancers =
+  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
   
+  const middleware = [thunk];
+
   
   const store = createStore(
-   reducer,
-   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+   rootReducer,
+   composeEnhancers(
+    applyMiddleware(...middleware)
+  )
   );
   
   export default store;

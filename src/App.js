@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import { addNewToDo } from './store/actions';
+import { addNewToDo, fetchToDos } from './store/actions';
 
 import { connect } from 'react-redux';
 
@@ -9,6 +9,10 @@ class App extends Component {
 
   state = {
     name: ""
+  }
+
+  componentDidMount() {
+    this.props.fetchToDos();
   }
 
   handleChange = (element) => {
@@ -28,14 +32,14 @@ class App extends Component {
           <table>
             <tbody>
               {this.props.todo.map(todo => {
-                return <tr key={todo.id}><td>{todo.name}</td></tr>
+                return <tr key={todo.id}><td>{todo.text}</td></tr>
               })}
             </tbody>
           </table>
         </div>
         <form onSubmit={this.handleSubmit} id="form">
           <h2>Add a new todo</h2>
-          <input type="text" name="name" onChange={this.handleChange}>
+          <input type="text" name="text" onChange={this.handleChange}>
           </input>
           <input type="submit" value="ADD"></input>
         </form>
@@ -49,7 +53,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  addToDo: (todo) => dispatch(addNewToDo(todo))
+  addToDo: (todo) => dispatch(addNewToDo(todo)),
+  fetchToDos: () => dispatch(fetchToDos())
 })
 
 
