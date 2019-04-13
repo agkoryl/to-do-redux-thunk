@@ -27,7 +27,7 @@ export const populateToDos = (todolist) => ({
 })
 
 const mapEntries = (data) => {
-    return Object.entries(data).map(elem => {
+    return Object.entries(data || {}).map(elem => {
         return {
           id: elem[0],
           ...elem[1]

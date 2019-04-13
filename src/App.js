@@ -29,13 +29,13 @@ class App extends Component {
     return (
       <div className="app-container">
         <div>
-          <table>
-            <tbody>
+          <div>
+            <div>
               {this.props.todo.map(todo => {
-                return <tr key={todo.id}><td>{todo.text}</td></tr>
+                return <div key={todo.id}><div>{todo.text}</div><button type="button">x</button></div>
               })}
-            </tbody>
-          </table>
+            </div>
+          </div>
         </div>
         <form onSubmit={this.handleSubmit} id="form">
           <h2>Add a new todo</h2>
